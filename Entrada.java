@@ -27,3 +27,4 @@ public class Entrada {
             throw new RuntimeException(e);
         }
     }
+}
