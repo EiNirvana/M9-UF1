@@ -3,9 +3,9 @@
  */
 
 public class ROT13 {
-    char[] min ={'a', 'à', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
+    public char[] min ={'a', 'à', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
-    char[] maj = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
+    public char[] maj = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
      'M', 'N', 'Ñ', 'O', 'Ò', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z'};
 
     public static void main(String[] args){
@@ -35,17 +35,32 @@ public class ROT13 {
 
     public static String encriptacio(String missatgeOriginal){
         String missatgeFinal;
+        char caracFinal;
+        char caracLlista;
         int llargada = missatgeOriginal.length();
         for (int i = 0; i < llargada; i++){
             char caracAnal = missatgeOriginal.charAt(i);
-            for (int p = 0; p < llargada; p++){}
+            for (int p = 0; p < llargada; p++){
+                if (Character.isUpperCase(caracAnal)){
+                    caracLlista = maj[p];
+                    if (caracLlista == caracAnal){
+                        
+                    }
+                } else {
+                    caracLlista = min[p];
+                    if (caracLlista == caracAnal){
+
+                    }
+                }
+            }
+            missatgeFinal += caracFinal;
         }
 
         return missatgeFinal;
     }
     public static String desencriptacio(String missatge){
         String missatgeFinal;
-        String llargada = missatge.length(); 
+        int llargada = missatge.length(); 
 
         return missatgeFinal;
     }
