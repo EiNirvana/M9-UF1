@@ -9,7 +9,7 @@ public class ROT13 {
      'M', 'N', 'Ñ', 'O', 'Ò', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z'};
 
     public static void main(String[] args){
-        String originalMessage = "The quick fox jumps over the sleepy dog";
+        String originalMessage = "The quick fox jumps over the angry dog";
         String finalMessageEncriptat = "";
         String finalMessageDesencriptat = "";
                     
