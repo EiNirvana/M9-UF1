@@ -1,4 +1,3 @@
-package ex1_ROT13;
 /**
  * Activitat 1: Criptorització d'un missatge per part de ROT-13, a més del procès invers.
  */
