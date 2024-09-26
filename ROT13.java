@@ -3,87 +3,102 @@
  */
 
 public class ROT13 {
-    public static char[] min ={'a', 'à', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
+    public static char[] MIN ={'a', 'à', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
-    public static char[] maj = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
+    public static char[] MAJ = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
      'M', 'N', 'Ñ', 'O', 'Ò', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z'};
 
     public static void main(String[] args){
-        String originalMessage;
-        String finalMessage;
+        String originalMessage = "The quick fox jumps over the sleepy dog";
+        String finalMessageEncriptat = "";
+        String finalMessageDesencriptat = "";
+                    
+        finalMessageEncriptat = xifratROT13(originalMessage);
+        finalMessageDesencriptat = desxifratROT13(originalMessage);
 
-        System.out.println("Vols encriptar o desencriptar?");
-        String resposta = Entrada.readLine();
-        if (!resposta.isBlank()){
-            if (resposta.equals("encriptar") || resposta.equals("Encriptar")){
-                    System.out.println("Escriu el missatge");
-                    originalMessage = Entrada.readLine();
-                    finalMessage = encriptacio(originalMessage);
-
-                } else if (resposta.equals("desencriptar") || resposta.equals("Desencriptar")){
-                    System.out.println("Escriu el missatge");
-                    originalMessage = Entrada.readLine();
-                    finalMessage = desencriptacio(originalMessage);
-                } 
-                System.out.println("Cambi complert");
-                System.out.println("Missatge final: " + finalMessage);
-        } else {
-            System.out.println("error");
-        }
+        System.out.println("Missatge original: " + originalMessage);
+        System.out.println("Missatge encriptat: " + finalMessageEncriptat);
+        System.out.println("Missatge desencriptat: " + finalMessageDesencriptat); //S'ha usat el mateix missatge en la desencriptació, el text no a de tenir sentit
     }
 
-    public static String encriptacio(String missatgeOriginal){
-        String missatgeFinal;
-        char caracFinal;
+    public static String xifratROT13(String missatgeOriginal){
+        String missatgeFinal = "";
+        char caracFinal= ' ';
         char caracLlista;
-        int num = 13;
+        int num;
         int llargada = missatgeOriginal.length();
         for (int i = 0; i < llargada; i++){
+            num = 13;
             char caracAnal = missatgeOriginal.charAt(i);
-            for (int p = 0; p < llargada; p++){
+            if (Character.isLetter(caracAnal)){
                 if (Character.isUpperCase(caracAnal)){
-                    caracLlista = maj[p];
-                    if (caracLlista == caracAnal){
-                        num += p; 
-                        if (num > maj.length){num = num - maj.length;}
-                    } else continue;
+                    for (int p = 0; p < MAJ.length; p ++){
+                        caracLlista = MAJ[p];
+                        if (caracLlista == caracAnal){
+                            num += p; 
+                            if (num >= MAJ.length){
+                                num = num - MAJ.length;
+                                caracFinal = MAJ[num];
+                            } else {caracFinal = MAJ[num];}
+                            missatgeFinal += caracFinal;
+                        } else continue;
+                    }
                 } else {
-                    caracLlista = min[p];
-                    if (caracLlista == caracAnal){
-                        num += p;
-                        if (num > min.length){num = num - min.length;}
-                    } else continue;
+                    for (int p = 0; p < MIN.length; p++){
+                        caracLlista = MIN[p];
+                        if (caracLlista == caracAnal){
+                            num += p;
+                            if (num >= MIN.length){
+                                num = num - MIN.length;
+                                caracFinal = MIN[num];
+                            } else {caracFinal = MIN[num];}
+                            missatgeFinal += caracFinal;
+                        } else continue;
+                    }
                 }
-            }
-            missatgeFinal += caracFinal;
+            } else {missatgeFinal += caracAnal;}
         }
         if (missatgeFinal.isEmpty()){missatgeFinal = "?";}
         return missatgeFinal;
     }
-    public static String desencriptacio(String missatge){
-        String missatgeFinal;
-        char caracFinal;
+    public static String desxifratROT13(String missatgeOriginal){
+        String missatgeFinal = "";
+        char caracFinal= ' ';
         char caracLlista;
-        int num = 13;
-        int llargada = missatge.length();
+        int num;
+        int numFinal;
+        int llargada = missatgeOriginal.length();
         for (int i = 0; i < llargada; i++){
-            char caracAnal = missatge.charAt(i);
-            for (int p = 0; p < llargada; p++){
+            num = 13;
+            numFinal = 0;
+            char caracAnal = missatgeOriginal.charAt(i);
+            if (Character.isLetter(caracAnal)){
                 if (Character.isUpperCase(caracAnal)){
-                    caracLlista = maj[p];
-                    if (caracLlista == caracAnal){
-                        num += p; 
-                        if (num < 0){num = num + maj.length;}
-                    } else continue;
+                    for (int p = 0; p < MAJ.length; p ++){
+                        caracLlista = MAJ[p];
+                        if (caracLlista == caracAnal){
+                            numFinal = p - num; 
+                            if (numFinal < 0){
+                                numFinal = numFinal + MAJ.length;
+                                caracFinal = MAJ[numFinal];
+                            } else {caracFinal = MAJ[numFinal];}
+                            missatgeFinal += caracFinal;
+                        } else continue;
+                    }
                 } else {
-                    caracLlista = min[p];
-                    if (caracLlista == caracAnal){
-                        num -= p;
-                        if (num < 0){num = num + min.length;}
-                    } else continue;
+                    for (int p = 0; p < MIN.length; p++){
+                        caracLlista = MIN[p];
+                        if (caracLlista == caracAnal){
+                            numFinal = p - num; 
+                            if (numFinal < 0){
+                                numFinal = numFinal + MIN.length;
+                                caracFinal = MIN[numFinal];
+                            } else {caracFinal = MIN[numFinal];}
+                            missatgeFinal += caracFinal;
+                        } else continue;
+                    }
                 }
-            }
-            missatgeFinal += caracFinal;
+            } else {missatgeFinal += caracAnal;}
         }
         if (missatgeFinal.isEmpty()){missatgeFinal = "?";}
         return missatgeFinal;
