@@ -12,6 +12,7 @@ public class ROTX {
     public static void main(String[] args){
         String finalMessageEncriptat = "";
         String finalMessageDesencriptat = "";
+        String finalMessageForsat = "";
         int[] numProves = {3, 15, 5, 9, 8};
         String[] numOriginalMessage = {
             "The quick fox jumps over the angry dog", 
@@ -27,10 +28,13 @@ public class ROTX {
 
             finalMessageEncriptat = xifratROTX(originalMessage, desplaçament);
             finalMessageDesencriptat = desxifratROTX(originalMessage, desplaçament);
-
+            finalMessageForsat = desxifratROT(originalMessage);
+            
+            
             System.out.println("Missatge original: " + originalMessage);
             System.out.println("Missatge encriptat: " + finalMessageEncriptat);
             System.out.println("Missatge desencriptat: " + finalMessageDesencriptat); //S'ha usat el mateix missatge en la desencriptació, el text no a de tenir sentit
+            System.out.printf("Missatge desencriptat per força: \n" + finalMessageForsat);
         }
     }
 
@@ -117,7 +121,34 @@ public class ROTX {
         return missatgeFinal;
     }
 
-    //public static String desxifratROT(String cadenaXifrada){
+    public static String desxifratROT(String cadenaXifrada){
+        String missatgeDesxifrat = "";
 
-    //}
+        for (int i = 0; i < MIN.length; i++){
+            for (int p = 0; p < cadenaXifrada.length() - 1; p++){
+                char carac = cadenaXifrada.charAt(p);
+                if (letterOrNotLetter(carac) == false) missatgeDesxifrat += carac;
+                else {
+                    if (p == cadenaXifrada.length() - 1) {
+                        if (minOMaj(carac) == false) missatgeDesxifrat = missatgeDesxifrat + cadenaXifrada.charAt((p + i) % MIN.length) ;
+                        else missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MAJ.length) ;
+                    } else {
+                        if (minOMaj(carac) == false) missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MIN.length);
+                        else missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MAJ.length);
+                    } 
+                }
+            }
+        }
+
+        return missatgeDesxifrat;
+    }
+
+    public static boolean minOMaj(char carac){
+        if (!Character.isUpperCase(carac)) return true;
+        return false;
+    }
+
+    public static boolean letterOrNotLetter(char carac){
+        return Character.isLetter(carac); 
+    }
 }
