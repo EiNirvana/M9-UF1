@@ -130,8 +130,8 @@ public class ROTX {
                 if (letterOrNotLetter(carac) == false) missatgeDesxifrat += carac;
                 else {
                     if (p == cadenaXifrada.length() - 1) {
-                        if (minOMaj(carac) == false) missatgeDesxifrat = missatgeDesxifrat + cadenaXifrada.charAt((p + i) % MIN.length) ;
-                        else missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MAJ.length) ;
+                        if (minOMaj(carac) == false) missatgeDesxifrat = missatgeDesxifrat + cadenaXifrada.charAt((p + i) % MIN.length) + "\n";
+                        else missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MAJ.length) + "\n";
                     } else {
                         if (minOMaj(carac) == false) missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MIN.length);
                         else missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MAJ.length);
