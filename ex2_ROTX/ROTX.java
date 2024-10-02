@@ -8,19 +8,20 @@ public class ROTX {
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
     public static char[] MAJ = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
      'M', 'N', 'Ñ', 'O', 'Ò', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z'};
+    public static String[] numOriginalMessage = {
+        "The quick fox jumps over the angry dog", 
+        "La zebra busca el seu calçat",
+        "A Rafael le ha venido una ñoña de tres al cuarto",
+        "Busca el que és, i el que no és, no serà pas.",
+        "La Conservació I El Tracte Correcte Del Mediambient És Important Per A La Salut."
+    };
 
     public static void main(String[] args){
         String finalMessageEncriptat = "";
         String finalMessageDesencriptat = "";
         String finalMessageForsat = "";
         int[] numProves = {3, 15, 5, 9, 8};
-        String[] numOriginalMessage = {
-            "The quick fox jumps over the angry dog", 
-            "La zebra busca el seu calçat",
-            "A Rafael le ha venido una ñoña de tres al cuarto",
-            "Busca el que és, i el que no és, no serà pas.",
-            "La Conservació I El Tracte Correcte Del Mediambient És Important Per A La Salut."
-        };
+        
         
         for (int i = 0; i < numProves.length; i++){
             int desplaçament = numProves[i];
@@ -125,30 +126,10 @@ public class ROTX {
         String missatgeDesxifrat = "";
 
         for (int i = 0; i < MIN.length; i++){
-            for (int p = 0; p < cadenaXifrada.length() - 1; p++){
-                char carac = cadenaXifrada.charAt(p);
-                if (letterOrNotLetter(carac) == false) missatgeDesxifrat += carac;
-                else {
-                    if (p == cadenaXifrada.length() - 1) {
-                        if (minOMaj(carac) == false) missatgeDesxifrat = missatgeDesxifrat + cadenaXifrada.charAt((p + i) % MIN.length) + "\n";
-                        else missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MAJ.length) + "\n";
-                    } else {
-                        if (minOMaj(carac) == false) missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MIN.length);
-                        else missatgeDesxifrat += cadenaXifrada.charAt((p + i) % MAJ.length);
-                    } 
-                }
-            }
+            missatgeDesxifrat += xifratROTX(cadenaXifrada, i) + "\n";
         }
 
         return missatgeDesxifrat;
     }
 
-    public static boolean minOMaj(char carac){
-        if (!Character.isUpperCase(carac)) return true;
-        return false;
-    }
-
-    public static boolean letterOrNotLetter(char carac){
-        return Character.isLetter(carac); 
-    }
 }
