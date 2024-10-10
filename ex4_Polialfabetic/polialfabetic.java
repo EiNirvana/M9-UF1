@@ -8,9 +8,7 @@ import java.util.Random;
 public class polialfabetic {
     public static char[] MIN ={'a', 'à', 'á', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
-    public static char[] MAJ = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
-     'M', 'N', 'Ñ', 'O', 'Ò', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z'};
-    public static int clauSecreta = 16;
+    public static final int clauSecreta = 16;
     public static Random random = new Random();
 
     public static void main(String[] args) {
@@ -37,20 +35,19 @@ public class polialfabetic {
     public static String xifraPoliAlfa(String msg){
         String finalMessage = "";
         char carac;
+        boolean upperCase = false;
 
         for (int i = 0; i < msg.length(); i++){
             carac = msg.charAt(i);
-
             if (!Character.isLetter(carac)){finalMessage += carac;}
             else{
-                if (Character.isUpperCase(carac)){
-
-                } else {
-
-                }
+                if (Character.isUpperCase(carac)){upperCase = true; Character.toLowerCase(carac);}
+                int num = 0;
+                    
             }
+            upperCase = false;
         }
-
+        
         return finalMessage;
     }
 
@@ -62,13 +59,10 @@ public class polialfabetic {
         return finalMessage;
     }
 
-
-
     public static void initRandom(int clauSecreta){
         random.setSeed(clauSecreta);
 
         MIN = transformListToArray(permutaAlfabet(transformArrayToList(MIN)));
-        MAJ = transformListToArray(permutaAlfabet(transformArrayToList(MAJ)));
     }
 
     public static List<Character> permutaAlfabet(List<Character> alfabetList){
@@ -95,4 +89,3 @@ public class polialfabetic {
         }
         return list;
     }
-}
