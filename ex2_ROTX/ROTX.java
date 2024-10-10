@@ -28,8 +28,8 @@ public class ROTX {
             String originalMessage = numOriginalMessage[i];
 
             finalMessageEncriptat = xifratROTX(originalMessage, desplaçament);
-            finalMessageDesencriptat = desxifratROTX(originalMessage, desplaçament);
-            finalMessageForsat = desxifratROT(originalMessage);
+            finalMessageDesencriptat = desxifratROTX(finalMessageEncriptat, desplaçament);
+            finalMessageForsat = desxifratROT(finalMessageEncriptat);
             
             
             System.out.println("Missatge original: " + originalMessage);
