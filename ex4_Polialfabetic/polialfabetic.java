@@ -1,0 +1,94 @@
+//Resposta de la pràctica quatre, amb una codificació més extrema
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.random;
+
+public class polialfabetic {
+    public static char[] MIN ={'a', 'à', 'á', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
+     'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
+    public static char[] MAJ = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
+     'M', 'N', 'Ñ', 'O', 'Ò', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z'};
+    public static int clauSecreta = 16;
+
+    public static void main(String[] args) {
+        String msgs[] = {"Test 01 àrbritre, coixí, Perímetre",
+                "Test 02 Taüll, DÍA, año",
+                "Test 03 Peça, Òrrius, Bòvila"};
+        String msgsXifrats[] = new String[msgs.length];
+    
+        System.out.println("Xifratge:\n--------");
+        for (int i = 0; i < msgs.length; i++) {
+            initRandom(clauSecreta);
+            msgsXifrats[i] = xifraPoliAlfa(msgs[i]);
+            System.out.printf("%-34s -> %s%n", msgs[i], msgsXifrats[i]);
+        }
+    
+        System.out.println("Desxifratge:\n-----------");
+        for (int i = 0; i < msgs.length; i++) {
+            initRandom(clauSecreta);
+            String msg = desxifraPoliAlfa(msgsXifrats[i]);
+            System.out.printf("%-34s -> %s%n", msgsXifrats[i], msg);
+        }
+    }
+
+    public static String xifraPoliAlfa(String msg){
+        String finalMessage = "";
+        char carac;
+
+        for (int i = 0; i < msg.length(); i++){
+            carac = msg.charAt(i);
+
+            if (!Character.isLetter(carac)){finalMessage += carac;}
+            else{
+                if (Character.isUpperCase(carac)){
+
+                } else {
+
+                }
+            }
+        }
+
+        return finalMessage;
+    }
+
+    public static String desxifraPoliAlfa(String msgXifrat){
+        String finalMessage = "";
+
+
+
+        return finalMessage;
+    }
+
+
+
+    public static void initRandom(clauSecreta){
+
+    }
+
+    public static List<Character> permutaAlfabet(List<Character> alfabetList){
+
+        Collections.shuffle(alfabetList);
+
+        return alfabetList;
+    }
+
+    public static List<Character> transformArrayToList(char[] list){
+        List<Character> alfabetList = new ArrayList<>();
+
+        for (char carac:list){
+            alfabetList.add(carac);
+        }
+        return alfabetList;
+    }
+
+    public static char[] transformListToArray(List<Character> alfabetList){
+        char[] list = new char[alfabetList.size()];
+
+        for (int i = 0; i < alfabetList.size(); i++){
+            list[i] = alfabetList.get(i);
+        }
+        return list;
+    }
+}
