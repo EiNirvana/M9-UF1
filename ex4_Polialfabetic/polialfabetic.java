@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class polialfabetic {
     public static char[] MIN ={'a', 'à', 'á', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
-     'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
+     'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'ü', 'v', 'w', 'x', 'y', 'z'};
     public static final int clauSecreta = 16;
     public static Random random = new Random();
 
@@ -33,36 +33,59 @@ public class polialfabetic {
     }
 
     public static String xifraPoliAlfa(String msg){
-        String finalMessage = "";
+        StringBuilder finalMessage = new StringBuilder();
         char carac;
         boolean upperCase = false;
-
-        for (int i = 0; i < msg.length(); i++){
-            carac = msg.charAt(i);
-            if (!Character.isLetter(carac)){finalMessage += carac;}
-            else{
-                if (Character.isUpperCase(carac)){upperCase = true; Character.toLowerCase(carac);}
-                int num = 0;
-                    
-            }
-            upperCase = false;
-        }
+        char caracFinal;
         
-        return finalMessage;
+        for (int i = 0; i < msg.length(); i++){
+            char[] mixMin = transformListToArray(permutaAlfabet(transformArrayToList(MIN)));
+            carac = msg.charAt(i);
+            if (!Character.isLetter(carac)){finalMessage.append(carac);}
+            else{
+                if (Character.isUpperCase(carac)){upperCase = true; carac = Character.toLowerCase(carac);}
+                for (int p = 0; p < MIN.length; p++){
+                    if (carac == MIN[p]) {
+                        caracFinal = mixMin[p];
+                        if (upperCase == true){caracFinal = Character.toUpperCase(caracFinal);}
+                        finalMessage.append(caracFinal);
+                        upperCase = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return finalMessage.toString();
     }
 
     public static String desxifraPoliAlfa(String msgXifrat){
-        String finalMessage = "";
-
-
-
-        return finalMessage;
+        StringBuilder finalMessage = new StringBuilder();
+        char carac;
+        boolean upperCase = false;
+        char caracFinal;
+        
+        for (int i = 0; i < msgXifrat.length(); i++){
+            char[] mixMin = transformListToArray(permutaAlfabet(transformArrayToList(MIN)));
+            carac = msgXifrat.charAt(i);
+            if (!Character.isLetter(carac)){finalMessage.append(carac);}
+            else{
+                if (Character.isUpperCase(carac)){upperCase = true; carac = Character.toLowerCase(carac);}
+                for (int p = 0; p < MIN.length; p++){
+                    if (carac == mixMin[p]) {
+                        caracFinal = MIN[p];
+                        if (upperCase == true){caracFinal = Character.toUpperCase(caracFinal);}
+                        finalMessage.append(caracFinal);
+                        upperCase = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return finalMessage.toString();
     }
 
     public static void initRandom(int clauSecreta){
         random.setSeed(clauSecreta);
-
-        MIN = transformListToArray(permutaAlfabet(transformArrayToList(MIN)));
     }
 
     public static List<Character> permutaAlfabet(List<Character> alfabetList){
@@ -89,3 +112,4 @@ public class polialfabetic {
         }
         return list;
     }
+}
