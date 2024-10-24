@@ -4,7 +4,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Arrays;
 
-public class AES {
+public class XifradorAES {
     public static final String ALGORISME_XIFRAT = "AES";
     public static final String ALGORISME_HASH = "SHA-256";
     public static final String FORMAT_AES = "AES/CBC/PKCS5Padding";
