@@ -1,5 +1,8 @@
 import javax.crypto.*;
 import java.security.*;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Arrays;
 
 public class AES {
     public static final String ALGORISME_XIFRAT = "AES";
@@ -46,26 +49,45 @@ public class AES {
         IvParameterSpec ivParams = new IvParameterSpec(iv); 
 
         // Genera hash
+        MessageDigest digest = MessageDigest.getInstance(ALGORISME_HASH);
+        byte[] clauHash = digest.digest(clau.getBytes());
+        SecretKeySpec secretKey = new SecretKeySpec(clauHash, ALGORISME_XIFRAT);
 
         // Encrypt.
+        Cipher cipher = Cipher.getInstance(FORMAT_AES);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParams);
 
         // Combinar IV i part xifrada.
+        byte[] msgXifrat = cipher.doFinal(missOriginal);
+        byte[] missFinal = new byte[iv.length + msgXifrat.length];
+        System.arraycopy(iv, 0, missFinal, 0, iv.length);
+        System.arraycopy(msgXifrat, 0, missFinal, iv.length, msgXifrat.length);
 
         // return iv+msgxifrat
-        return missFinal[];
+        return missFinal;
     }
 
     public static String desxifraAES(byte[] bIvIMsgXifrat, String clau) throws Exception {
         String missatgeFinal = " ";
         // Extreure l'IV.
+        byte[] iv = Arrays.copyOfRange(bIvIMsgXifrat, 0, MIDA_IV);
+        IvParameterSpec ivParams = new IvParameterSpec(iv);
 
         // Extreure la part xifrada.
+        byte[] msgXifrat = Arrays.copyOfRange(bIvIMsgXifrat, MIDA_IV, bIvIMsgXifrat.length);
 
         // Fer hash de la clau
+        MessageDigest digest = MessageDigest.getInstance(ALGORISME_HASH);
+        byte[] clauHash = digest.digest(clau.getBytes());
+        SecretKeySpec secretKey = new SecretKeySpec(clauHash, ALGORISME_XIFRAT);
 
         // Desxifrar.
+        Cipher cipher = Cipher.getInstance(FORMAT_AES);
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParams);
+        byte[] missDesxifrat = cipher.doFinal(msgXifrat);
 
         // return String desxifrat
+        missatgeFinal = new String(missDesxifrat);
         return missatgeFinal;
     }
 }
