@@ -1,3 +1,5 @@
+package iticbcn.xifratge;
+
 /**
  * Exercici següent a ROT13, en que ara l'usuari escull quin es el núm de la codificació. 
  * A més a més, hi ha una pàgina que descodifica el codi a la força.
@@ -8,7 +10,7 @@ public class XifradorROTX {
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
     public static char[] MAJ = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
      'M', 'N', 'Ñ', 'O', 'Ò', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z'};
-    public static String[] numOriginalMessage = {
+    public String[] numOriginalMessage = {
         "The quick fox jumps over the angry dog", 
         "La zebra busca el seu calçat",
         "A Rafael le ha venido una ñoña de tres al cuarto",
@@ -16,30 +18,8 @@ public class XifradorROTX {
         "La Conservació I El Tracte Correcte Del Mediambient És Important Per A La Salut."
     };
 
-    public static void main(String[] args){
-        String finalMessageEncriptat = "";
-        String finalMessageDesencriptat = "";
-        String finalMessageForsat = "";
-        int[] numProves = {3, 15, 5, 9, 8};
-        
-        
-        for (int i = 0; i < numProves.length; i++){
-            int desplaçament = numProves[i];
-            String originalMessage = numOriginalMessage[i];
 
-            finalMessageEncriptat = xifratROTX(originalMessage, desplaçament);
-            finalMessageDesencriptat = desxifratROTX(finalMessageEncriptat, desplaçament);
-            finalMessageForsat = desxifratROT(finalMessageEncriptat);
-            
-            
-            System.out.println("Missatge original: " + originalMessage);
-            System.out.println("Missatge encriptat: " + finalMessageEncriptat);
-            System.out.println("Missatge desencriptat: " + finalMessageDesencriptat); //S'ha usat el mateix missatge en la desencriptació, el text no a de tenir sentit
-            System.out.printf("Missatge desencriptat per força: \n" + finalMessageForsat);
-        }
-    }
-
-    public static String xifratROTX(String cadena, int desplaçament){
+    public String xifratROTX(String cadena, int desplaçament){
         String missatgeFinal = "";
         char caracFinal= ' ';
         char caracLlista;
@@ -79,7 +59,7 @@ public class XifradorROTX {
         if (missatgeFinal.isEmpty()){missatgeFinal = "?";}
         return missatgeFinal;
     }
-    public static String desxifratROTX(String cadena, int desplaçament){
+    public String desxifratROTX(String cadena, int desplaçament){
         String missatgeFinal = "";
         char caracFinal= ' ';
         char caracLlista;
@@ -122,7 +102,7 @@ public class XifradorROTX {
         return missatgeFinal;
     }
 
-    public static String desxifratROT(String cadenaXifrada){
+    public String desxifratROT(String cadenaXifrada){
         String missatgeDesxifrat = "";
 
         for (int i = 0; i < MIN.length; i++){

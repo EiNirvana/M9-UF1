@@ -1,3 +1,5 @@
+package iticbcn.xifratge;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
@@ -7,8 +9,8 @@ public class XifradorMonoalfabetic {
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
     public static char[] MAJ = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
      'M', 'N', 'Ñ', 'O', 'Ò', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z'};
-    public static char[] shuffledMAJ = transformListToArray(permutaAlfabet(transformArrayToList(MAJ)));
-    public static char[] shuffledMIN = transformListToArray(permutaAlfabet(transformArrayToList(MIN)));
+    public char[] shuffledMAJ = transformListToArray(permutaAlfabet(transformArrayToList(MAJ)));
+    public char[] shuffledMIN = transformListToArray(permutaAlfabet(transformArrayToList(MIN)));
     public static String[] numOriginalMessage = {
         "The quick fox jumps over the angry dog", 
         "La zebra busca el seu calçat",
@@ -17,24 +19,8 @@ public class XifradorMonoalfabetic {
         "La Conservació I El Tracte Correcte Del Mediambient És Important Per A La Salut."
     };
 
-    public static void main(String[] args){
-        String frase = "";
-        for (int i = 0; i < numOriginalMessage.length; i++){
-            frase = numOriginalMessage[i];
 
-            if (i == 2 || i == 4){
-                String fraseMix = xifraMonoAlfa(frase);
-                System.out.println("Frase inicial: " + fraseMix);
-                System.out.println("Frase desxifrada: " + desxifraMonoAlfa(fraseMix));
-            } else {
-                System.out.println("Frase inicial: " + frase);
-                System.out.println("Frase xifrada: " + xifraMonoAlfa(frase));
-            }
-        }
-    }
-
-
-    public static String xifraMonoAlfa(String cadena){
+    public String xifraMonoAlfa(String cadena){
         String cadenaXifrada = "";
 
         for (int i = 0; i < cadena.length(); i++){
@@ -59,7 +45,7 @@ public class XifradorMonoalfabetic {
         return cadenaXifrada;
     }
 
-    public static String desxifraMonoAlfa(String cadena){
+    public String desxifraMonoAlfa(String cadena){
         String cadenaXifrada = "";
 
         for (int i = 0; i < cadena.length(); i++){
@@ -85,7 +71,7 @@ public class XifradorMonoalfabetic {
     }
 
 
-    public static List<Character> permutaAlfabet(List<Character> alfabetList){
+    public List<Character> permutaAlfabet(List<Character> alfabetList){
 
         Collections.shuffle(alfabetList);
 
@@ -93,7 +79,7 @@ public class XifradorMonoalfabetic {
     }
 
 
-    public static List<Character> transformArrayToList(char[] list){
+    public List<Character> transformArrayToList(char[] list){
         List<Character> alfabetList = new ArrayList<>();
 
         for (char carac:list){
@@ -102,7 +88,7 @@ public class XifradorMonoalfabetic {
         return alfabetList;
     }
 
-    public static char[] transformListToArray(List<Character> alfabetList){
+    public char[] transformListToArray(List<Character> alfabetList){
         char[] list = new char[alfabetList.size()];
 
         for (int i = 0; i < alfabetList.size(); i++){

@@ -1,3 +1,5 @@
+package iticbcn.xifratge;
+
 /**
  * Activitat 1: Criptorització d'un missatge per part de ROT-13, a més del procès invers.
  */
@@ -8,20 +10,8 @@ public class XifradorROT13 {
     public static char[] MAJ = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
      'M', 'N', 'Ñ', 'O', 'Ò', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z'};
 
-    public static void main(String[] args){
-        String originalMessage = "La Conservació I El Tracte Correcte Del Mediambient És Important Per A La Salut.";
-        String finalMessageEncriptat = "";
-        String finalMessageDesencriptat = "";
-                    
-        finalMessageEncriptat = xifratROT13(originalMessage);
-        finalMessageDesencriptat = desxifratROT13(originalMessage);
 
-        System.out.println("Missatge original: " + originalMessage);
-        System.out.println("Missatge encriptat: " + finalMessageEncriptat);
-        System.out.println("Missatge desencriptat: " + finalMessageDesencriptat); //S'ha usat el mateix missatge en la desencriptació, el text no a de tenir sentit
-    }
-
-    public static String xifratROT13(String missatgeOriginal){
+    public String xifratROT13(String missatgeOriginal){
         String missatgeFinal = "";
         char caracFinal= ' ';
         char caracLlista;
@@ -61,7 +51,7 @@ public class XifradorROT13 {
         if (missatgeFinal.isEmpty()){missatgeFinal = "?";}
         return missatgeFinal;
     }
-    public static String desxifratROT13(String missatgeOriginal){
+    public String desxifratROT13(String missatgeOriginal){
         String missatgeFinal = "";
         char caracFinal= ' ';
         char caracLlista;

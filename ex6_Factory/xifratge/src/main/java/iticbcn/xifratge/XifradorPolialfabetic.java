@@ -1,3 +1,5 @@
+package iticbcn.xifratge;
+
 //Resposta de la pràctica quatre, amb una codificació més extrema
 
 import java.util.ArrayList;
@@ -9,30 +11,10 @@ public class XifradorPolialfabetic {
     public static char[] MIN ={'a', 'à', 'á', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'ü', 'v', 'w', 'x', 'y', 'z'};
     public static final int clauSecreta = 16;
-    public static Random random = new Random();
+    public Random random = new Random();
 
-    public static void main(String[] args) {
-        String msgs[] = {"Test 01 àrbritre, coixí, Perímetre",
-                "Test 02 Taüll, DÍA, año",
-                "Test 03 Peça, Òrrius, Bòvila"};
-        String msgsXifrats[] = new String[msgs.length];
-    
-        System.out.println("Xifratge:\n--------");
-        for (int i = 0; i < msgs.length; i++) {
-            initRandom(clauSecreta);
-            msgsXifrats[i] = xifraPoliAlfa(msgs[i]);
-            System.out.printf("%-34s -> %s%n", msgs[i], msgsXifrats[i]);
-        }
-    
-        System.out.println("Desxifratge:\n-----------");
-        for (int i = 0; i < msgs.length; i++) {
-            initRandom(clauSecreta);
-            String msg = desxifraPoliAlfa(msgsXifrats[i]);
-            System.out.printf("%-34s -> %s%n", msgsXifrats[i], msg);
-        }
-    }
 
-    public static String xifraPoliAlfa(String msg){
+    public String xifraPoliAlfa(String msg){
         StringBuilder finalMessage = new StringBuilder();
         char carac;
         boolean upperCase = false;
@@ -58,7 +40,7 @@ public class XifradorPolialfabetic {
         return finalMessage.toString();
     }
 
-    public static String desxifraPoliAlfa(String msgXifrat){
+    public String desxifraPoliAlfa(String msgXifrat){
         StringBuilder finalMessage = new StringBuilder();
         char carac;
         boolean upperCase = false;
@@ -84,18 +66,18 @@ public class XifradorPolialfabetic {
         return finalMessage.toString();
     }
 
-    public static void initRandom(int clauSecreta){
+    public void initRandom(int clauSecreta){
         random.setSeed(clauSecreta);
     }
 
-    public static List<Character> permutaAlfabet(List<Character> alfabetList){
+    public List<Character> permutaAlfabet(List<Character> alfabetList){
 
         Collections.shuffle(alfabetList, random);
 
         return alfabetList;
     }
 
-    public static List<Character> transformArrayToList(char[] list){
+    public List<Character> transformArrayToList(char[] list){
         List<Character> alfabetList = new ArrayList<>();
 
         for (char carac:list){
@@ -104,7 +86,7 @@ public class XifradorPolialfabetic {
         return alfabetList;
     }
 
-    public static char[] transformListToArray(List<Character> alfabetList){
+    public char[] transformListToArray(List<Character> alfabetList){
         char[] list = new char[alfabetList.size()];
 
         for (int i = 0; i < alfabetList.size(); i++){
