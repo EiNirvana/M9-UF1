@@ -7,14 +7,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class XifradorPolialfabetic {
+public class XifradorPolialfabetic implements Xifrador{
     public static char[] MIN ={'a', 'à', 'á', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'ü', 'v', 'w', 'x', 'y', 'z'};
     public static final int clauSecreta = 16;
     public Random random = new Random();
 
 
-    public String xifraPoliAlfa(String msg){
+    public String xifraPoliAlfa(String msg) throws ClauNoSuportada{
         StringBuilder finalMessage = new StringBuilder();
         char carac;
         boolean upperCase = false;
@@ -40,7 +40,7 @@ public class XifradorPolialfabetic {
         return finalMessage.toString();
     }
 
-    public String desxifraPoliAlfa(String msgXifrat){
+    public String desxifraPoliAlfa(String msgXifrat) throws ClauNoSuportada{
         StringBuilder finalMessage = new StringBuilder();
         char carac;
         boolean upperCase = false;
@@ -93,5 +93,14 @@ public class XifradorPolialfabetic {
             list[i] = alfabetList.get(i);
         }
         return list;
+    }
+
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        String msgXifratge = xifraPoliAlfa(msg);
+        return new TextXifrat(msgXifratge.getBytes());
+    }
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
+        String msgXifrat = new String(xifrat.getBytes());
+        return desxifraPoliAlfa(msgXifrat);
     }
 }

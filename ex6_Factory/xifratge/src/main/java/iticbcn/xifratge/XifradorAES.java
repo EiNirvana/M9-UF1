@@ -6,7 +6,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Arrays;
 
-public class XifradorAES {
+public class XifradorAES implements Xifrador {
     public final String ALGORISME_XIFRAT = "AES";
     public final String ALGORISME_HASH = "SHA-256";
     public final String FORMAT_AES = "AES/CBC/PKCS5Padding";
@@ -67,5 +67,25 @@ public class XifradorAES {
         // return String desxifrat
         missatgeFinal = new String(missDesxifrat);
         return missatgeFinal;
+    }
+
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        try {
+            byte[] msgXifratge = xifraAES(msg, clau);
+            return new TextXifrat(msgXifratge);
+        } catch (NumberFormatException i){
+            throw new ClauNoSuportada("La clau no es un número acceptable per a la rotació");
+        } 
+    }
+
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
+        try {
+            byte[] msgXifrat = xifrat.getBytes();
+            return desxifraAES(msgXifrat, clau);
+        } catch (NumberFormatException i){
+            throw new ClauNoSuportada("La clau no es un número acceptable per a la rotació");
+        }
+
+        
     }
 }

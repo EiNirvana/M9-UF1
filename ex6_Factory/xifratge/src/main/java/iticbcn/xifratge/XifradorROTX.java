@@ -1,11 +1,13 @@
 package iticbcn.xifratge;
 
+//import org.w3c.dom.Text;
+
 /**
  * Exercici següent a ROT13, en que ara l'usuari escull quin es el núm de la codificació. 
  * A més a més, hi ha una pàgina que descodifica el codi a la força.
  */
 
-public class XifradorROTX {
+public class XifradorROTX implements Xifrador {
     public static char[] MIN ={'a', 'à', 'á', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
     public static char[] MAJ = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
@@ -17,7 +19,18 @@ public class XifradorROTX {
         "Busca el que és, i el que no és, no serà pas.",
         "La Conservació I El Tracte Correcte Del Mediambient És Important Per A La Salut."
     };
+    public int rot = 0;
 
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        try {
+            rot = Integer.parseInt(clau);
+        } catch (NumberFormatException i){
+            throw new ClauNoSuportada("La clau no es un número acceptable per a la rotació");
+        }
+
+        String msgXifratge = xifratROTX(msg, rot);
+        return new TextXifrat(msgXifratge.getBytes());
+    }
 
     public String xifratROTX(String cadena, int desplaçament){
         String missatgeFinal = "";
@@ -112,4 +125,14 @@ public class XifradorROTX {
         return missatgeDesxifrat;
     }
 
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
+        try {
+            rot = Integer.parseInt(clau);
+        } catch (NumberFormatException i){
+            throw new ClauNoSuportada("La clau no es un número acceptable per a la rotació");
+        }
+
+        String msgXifrat = new String(xifrat.getBytes());
+        return desxifratROTX(msgXifrat, rot);
+    }
 }

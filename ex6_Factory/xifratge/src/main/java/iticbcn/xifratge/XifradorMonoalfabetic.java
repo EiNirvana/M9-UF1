@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-public class XifradorMonoalfabetic {
+public class XifradorMonoalfabetic implements Xifrador{
     public static char[] MIN ={'a', 'à', 'á', 'b', 'c', 'ç', 'd', 'e','è', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l',
      'm', 'n', 'ñ', 'o', 'ò', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z'};
     public static char[] MAJ = {'A', 'À', 'B', 'C', 'Ç', 'D', 'E', 'È', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L',
@@ -95,5 +95,14 @@ public class XifradorMonoalfabetic {
             list[i] = alfabetList.get(i);
         }
         return list;
+    }
+
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        String msgXifratge = xifraMonoAlfa(msg);
+        return new TextXifrat(msgXifratge.getBytes());
+    }
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
+        String msgXifrat = new String(xifrat.getBytes());
+        return desxifraMonoAlfa(msgXifrat);
     }
 }
