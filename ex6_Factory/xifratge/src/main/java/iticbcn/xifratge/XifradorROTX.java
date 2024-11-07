@@ -21,16 +21,6 @@ public class XifradorROTX implements Xifrador {
     };
     public int rot = 0;
 
-    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
-        try {
-            rot = Integer.parseInt(clau);
-        } catch (NumberFormatException i){
-            throw new ClauNoSuportada("La clau no es un número acceptable per a la rotació");
-        }
-
-        String msgXifratge = xifratROTX(msg, rot);
-        return new TextXifrat(msgXifratge.getBytes());
-    }
 
     public String xifratROTX(String cadena, int desplaçament){
         String missatgeFinal = "";
@@ -125,6 +115,17 @@ public class XifradorROTX implements Xifrador {
         return missatgeDesxifrat;
     }
 
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        try {
+            rot = Integer.parseInt(clau);
+        } catch (NumberFormatException i){
+            throw new ClauNoSuportada("La clau no es un número acceptable per a la rotació");
+        }
+
+        String msgXifratge = xifratROTX(msg, rot);
+        return new TextXifrat(msgXifratge.getBytes());
+    }
+    
     public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
         try {
             rot = Integer.parseInt(clau);
