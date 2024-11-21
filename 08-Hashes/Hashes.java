@@ -14,18 +14,17 @@ import javax.crypto.spec.PBEKeySpec;
 import java.io.IOException;
 
 public class Hashes {
-    char charset = "abcdefABCDEF1234567890!".charAt();
-    public int npass = 0;
-    private static final int ITERATION = 10000; 
+    private static final int ITERATION = 65536; 
     private static final int HASH_SIZE = 16;
+    public int npass = 0;
 
     public static void main(String[] args) throws Exception {
         String salt = "qpoweiruañslkdfjz";
         String pw = "aaabF!";
         Hashes h = new Hashes();
-        String[] aHashes = { h.getSHA512AmbSalt(pw, salt), h.getPBKDF2AmbSalt(pw, salt) };
-        String pwTrobat = null;
         String[] algorismes = {"SHA-512", "PBKDF2"};
+        String pwTrobat = null;
+        String[] aHashes = { h.getSHA512AmbSalt(pw, salt), h.getPBKDF2AmbSalt(pw, salt) };
         for(int i=0; i< aHashes.length; i++){
             System.out.printf("===========================\n");
             System.out.printf("Algorisme: %s\n", algorismes[i]);
@@ -50,7 +49,7 @@ public class Hashes {
         try{
             MessageDigest hashtec = MessageDigest.getInstance("SHA-512");
             hashtec.update(salt.getBytes(StandardCharsets.UTF_8));
-            byte[] bytes = hashtec.digest(passwordToHash.getBytes());
+            byte[] bytes = hashtec.digest(pw.getBytes(StandardCharsets.UTF_8));
             StringBuilder psline = new StringBuilder();
             for (int i = 0; i <bytes.length; i++){
                 psline.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
@@ -82,41 +81,80 @@ public class Hashes {
         return toHex(hash);
     }
 
-    /*  necessary for the modul atop this one.
-    private static String toHex(byte[] array) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < array.length; i++) {
-            sb.append(Integer.toString((array[i] & 0xff) + 0x100, 16).substring(1));
-        }
-        return sb.toString();
-    }
-    */
-
-    public String forcaBruta(String alg, String hash, String salt){
-        /**
-         * for (---)
-         * if ((testPw (0-----) != null) return pw
-         * for (---)
-         * testPw (-0----)
-         * for ...
-         */
+    public String forcaBruta(String alg, String targetHash, String salt){
+        String charset = "abcdefABCDEF1234567890!";
         try{
-            for (int length = 1; length <= 6; length++) {
-                // Generem totes les combinacions possibles de longitud actual
-                char[] password = new char[length];
-                if ((testPw(password, 0, length, alg, targetHash, salt)) != null) {
-                    return new String(password);
+            for (int ll = 1; ll <= 6; ll++){
+                char[] trys = new char[ll];
+                int num = charset.length();
+
+                for (int i = 1; i <= 6; i++){
+                    trys[0] = charset.charAt(i);
+                    if (ll == 1 && testPw(trys, alg, targetHash, salt)){
+                        return new String(trys);
+                    }
+                    
+                    for (int n = 1; n <= 6; n++){
+                        if (ll > 1){
+                            trys[1] = charset.charAt(n);
+                        }
+                        if (ll == 2 && testPw(trys, alg, targetHash, salt)){
+                            return new String(trys);
+                        }
+
+                        for (int f = 1; f <= 6; f++){
+                            if (ll > 2){
+                                trys[2] = charset.charAt(f);
+                            }
+                            if (ll == 3 && testPw(trys, alg, targetHash, salt)){
+                                return new String(trys);
+                            }
+
+                            for (int d = 1; d <= 6; d++){
+                                if (ll > 3){
+                                    trys[3] = charset.charAt(d);
+                                }
+                                if (ll == 4 && testPw(trys, alg, targetHash, salt)){
+                                    return new String(trys);
+                                }
+                                
+                                for (int r = 1; r <= 6; r++){
+                                    if (ll > 4){
+                                        trys[4] = charset.charAt(r);
+                                    }
+                                    if (ll == 5 && testPw(trys, alg, targetHash, salt)){
+                                        return new String(trys);
+                                    }
+                                    
+                                    for (int p = 1; p <= 6; p++){
+                                        if (ll > 5){
+                                            trys[5] = charset.charAt(p);
+                                        }
+                                        if (ll == 6 && testPw(trys, alg, targetHash, salt)){
+                                            return new String(trys);
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
                 }
             }
-            return null;
-
         } catch (IOException q){
             System.out.println("There has been a mistake when executing forcaBruta");
             q.printStackTrace();
         }
+        return null;
     }
 
-    private boolean testPw()
+    private boolean testPw(char[] attempt, String alg, String targetHash, String salt){
+        npass++;
+        String attemptStr = new String(attempt);
+        String attempHash = alg.equals("SHA-512") ? getSHA512AmbSalt(attemptStr, salt) : getPBKDF2AmbSalt(attemptStr, salt);
+        return attempHash != null && attempHash.equals(targetHash);
+    }
 
 
     public String getInterval(long t1, long t2){
