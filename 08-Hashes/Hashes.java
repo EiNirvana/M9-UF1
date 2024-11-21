@@ -14,7 +14,7 @@ import javax.crypto.spec.PBEKeySpec;
 import java.io.IOException;
 
 public class Hashes {
-    private static final int ITERATION = 65536; 
+    private static final int ITERATION = 10; 
     private static final int HASH_SIZE = 16;
     public int npass = 0;
 
@@ -58,7 +58,7 @@ public class Hashes {
                 // toString(..., 16) converts to hexadecimal string and -substring(1) treams the unecessary padding.
                 finalPass = psline.toString();
             }
-        } catch (IOException e){
+        } catch (Exception e){
             System.out.println("Something went wrong when trying to create a Hash SHA512");
             e.printStackTrace();
         }
@@ -72,68 +72,66 @@ public class Hashes {
             SecretKeyFactory skPB = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             byte[] hash = skPB.generateSecret(spec).getEncoded();
             HexFormat hex = HexFormat.of();
-            hash = hex.formatHex(bytes);
-
-        } catch (IOException p){
+            return hex.formatHex(hash);
+        } catch (Exception p){
             System.out.println("ERROR: Something went wrong when creating the PBKDF2.");
             p.printStackTrace();
         }
-        return toHex(hash);
+        return null;
     }
 
     public String forcaBruta(String alg, String targetHash, String salt){
         String charset = "abcdefABCDEF1234567890!";
-        try{
-            for (int ll = 1; ll <= 6; ll++){
+        try {
+            for (int ll = 1; ll <= 6; ll++) {
                 char[] trys = new char[ll];
                 int num = charset.length();
 
-                for (int i = 1; i <= 6; i++){
+                for (int i = 0; i < num; i++) {
                     trys[0] = charset.charAt(i);
-                    if (ll == 1 && testPw(trys, alg, targetHash, salt)){
+                    if (ll == 1 && testPw(trys, alg, targetHash, salt)) {
                         return new String(trys);
                     }
-                    
-                    for (int n = 1; n <= 6; n++){
-                        if (ll > 1){
+
+                    for (int n = 0; n < num; n++) {
+                        if (ll > 1) {
                             trys[1] = charset.charAt(n);
                         }
-                        if (ll == 2 && testPw(trys, alg, targetHash, salt)){
+                        if (ll == 2 && testPw(trys, alg, targetHash, salt)) {
                             return new String(trys);
                         }
 
-                        for (int f = 1; f <= 6; f++){
-                            if (ll > 2){
+                        for (int f = 0; f < num; f++) {
+                            if (ll > 2) {
                                 trys[2] = charset.charAt(f);
                             }
-                            if (ll == 3 && testPw(trys, alg, targetHash, salt)){
+                            if (ll == 3 && testPw(trys, alg, targetHash, salt)) {
                                 return new String(trys);
                             }
 
-                            for (int d = 1; d <= 6; d++){
-                                if (ll > 3){
+                            for (int d = 0; d < num; d++) {
+                                if (ll > 3) {
                                     trys[3] = charset.charAt(d);
                                 }
-                                if (ll == 4 && testPw(trys, alg, targetHash, salt)){
+                                if (ll == 4 && testPw(trys, alg, targetHash, salt)) {
                                     return new String(trys);
                                 }
-                                
-                                for (int r = 1; r <= 6; r++){
-                                    if (ll > 4){
+
+                                for (int r = 0; r < num; r++) {
+                                    if (ll > 4) {
                                         trys[4] = charset.charAt(r);
                                     }
-                                    if (ll == 5 && testPw(trys, alg, targetHash, salt)){
+                                    if (ll == 5 && testPw(trys, alg, targetHash, salt)) {
                                         return new String(trys);
                                     }
-                                    
-                                    for (int p = 1; p <= 6; p++){
-                                        if (ll > 5){
+
+                                    for (int p = 0; p < num; p++) {
+                                        if (ll > 5) {
                                             trys[5] = charset.charAt(p);
                                         }
-                                        if (ll == 6 && testPw(trys, alg, targetHash, salt)){
-                                            return new String(trys);
+                                        if (ll == 6 && testPw(trys, alg, targetHash, salt)) {
+                                            return new String(trys);  
                                         }
-                                        
                                     }
                                 }
                             }
@@ -142,7 +140,7 @@ public class Hashes {
                     }
                 }
             }
-        } catch (IOException q){
+        } catch (Exception q){
             System.out.println("There has been a mistake when executing forcaBruta");
             q.printStackTrace();
         }
